@@ -1,38 +1,32 @@
-let products = JSON.parse(localStorage.getItem("products")) || [
-  {
-    name: "iPhone 14",
-    price: 22000000,
-    img: "https://via.placeholder.com/200"
-  },
-  {
-    name: "Samsung S23",
-    price: 18000000,
-    img: "https://via.placeholder.com/200"
-  }
-];
-
+let products = JSON.parse(localStorage.getItem("products")) || [];
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+// Lưu dữ liệu
 function save() {
-  localStorage.setItem("cart", JSON.stringify(cart));
   localStorage.setItem("products", JSON.stringify(products));
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
+// ================== HIỂN THỊ SẢN PHẨM ==================
 function renderProducts() {
-  let html = "";
+  let list = document.getElementById("product-list");
+  if (!list) return;
+
+  list.innerHTML = "";
+
   products.forEach((p, index) => {
-    html += `
+    list.innerHTML += `
       <div class="product">
-        <img src="${p.img}">
+        <img src="${p.image}" width="150">
         <h3>${p.name}</h3>
-        <p>${p.price.toLocaleString()} VND</p>
-        <button onclick="addToCart(${index})">Mua</button>
+        <p>${p.price} đ</p>
+        <button onclick="addToCart(${index})">Thêm vào giỏ</button>
       </div>
     `;
   });
-  document.getElementById("product-list").innerHTML = html;
 }
 
+// ================== GIỎ HÀNG ==================
 function addToCart(index) {
   cart.push(products[index]);
   save();
@@ -40,12 +34,31 @@ function addToCart(index) {
 }
 
 function renderCart() {
-  let html = "";
-  cart.forEach(p => {
-    html += `<p>${p.name} - ${p.price.toLocaleString()} VND</p>`;
+  let cartItems = document.getElementById("cart-items");
+  let count = document.getElementById("cart-count");
+  let total = document.getElementById("cart-total");
+
+  if (!cartItems) return;
+
+  cartItems.innerHTML = "";
+
+  cart.forEach((item, i) => {
+    cartItems.innerHTML += `
+      <div>
+        ${item.name} - ${item.price} đ
+        <button onclick="removeFromCart(${i})">Xóa</button>
+      </div>
+    `;
   });
-  document.getElementById("cart-items").innerHTML = html;
-  document.getElementById("cart-count").innerText = cart.length;
+
+  if (count) count.innerText = cart.length;
+  if (total) total.innerText = cart.length;
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  save();
+  renderCart();
 }
 
 function checkout() {
@@ -55,5 +68,59 @@ function checkout() {
   renderCart();
 }
 
+// ================== ADMIN ==================
+function renderAdmin() {
+  let list = document.getElementById("admin-list");
+  if (!list) return;
+
+  list.innerHTML = "";
+
+  products.forEach((p, index) => {
+    list.innerHTML += `
+      <li>
+        ${p.name} - ${p.price}
+        <button onclick="editProduct(${index})">Sửa</button>
+        <button onclick="deleteProduct(${index})">Xóa</button>
+      </li>
+    `;
+  });
+}
+
+function addProduct() {
+  let name = document.getElementById("name").value;
+  let price = document.getElementById("price").value;
+  let image = document.getElementById("image").value;
+
+  products.push({ name, price, image });
+  save();
+  renderAdmin();
+  renderProducts();
+}
+
+function deleteProduct(index) {
+  products.splice(index, 1);
+  save();
+  renderAdmin();
+  renderProducts();
+}
+
+function editProduct(index) {
+  let newName = prompt("Tên mới:", products[index].name);
+  let newPrice = prompt("Giá mới:", products[index].price);
+  let newImage = prompt("Ảnh mới:", products[index].image);
+
+  products[index] = {
+    name: newName,
+    price: newPrice,
+    image: newImage
+  };
+
+  save();
+  renderAdmin();
+  renderProducts();
+}
+
+// ================== INIT ==================
 renderProducts();
 renderCart();
+renderAdmin();

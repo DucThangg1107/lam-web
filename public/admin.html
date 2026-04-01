@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Admin</title>
+  <title>Admin - FourT Mobile</title>
 </head>
 <body>
 
@@ -10,25 +10,14 @@
 
 <input id="name" placeholder="Tên">
 <input id="price" placeholder="Giá">
-<input id="img" placeholder="Link ảnh">
+<input id="image" placeholder="Ảnh (/images/iphone.jpg)">
 
 <button onclick="addProduct()">Thêm</button>
 
-<script>
-function addProduct() {
-  let name = document.getElementById("name").value;
-  let price = Number(document.getElementById("price").value);
-  let img = document.getElementById("img").value;
+<h2>Danh sách sản phẩm</h2>
+<ul id="admin-list"></ul>
 
-  let products = JSON.parse(localStorage.getItem("products")) || [];
-
-  products.push({ name, price, img });
-
-  localStorage.setItem("products", JSON.stringify(products));
-
-  alert("Thêm thành công!");
-}
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
