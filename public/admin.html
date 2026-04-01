@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin</title>
+</head>
+<body>
+
+<h2>Thêm sản phẩm</h2>
+
+<input id="name" placeholder="Tên">
+<input id="price" placeholder="Giá">
+<input id="img" placeholder="Link ảnh">
+
+<button onclick="addProduct()">Thêm</button>
+
+<script>
+function addProduct() {
+  let name = document.getElementById("name").value;
+  let price = Number(document.getElementById("price").value);
+  let img = document.getElementById("img").value;
+
+  let products = JSON.parse(localStorage.getItem("products")) || [];
+
+  products.push({ name, price, img });
+
+  localStorage.setItem("products", JSON.stringify(products));
+
+  alert("Thêm thành công!");
+}
+</script>
+
+</body>
+</html>

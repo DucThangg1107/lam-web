@@ -2,35 +2,31 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FourT Mobile</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>FourT Mobile</h1>
-    <p>Web bán điện thoại online</p>
-  </header>
 
-  <main>
-    <div class="products">
-      <div class="product">
-        <h3>iPhone 14</h3>
-        <p>Giá: 22,000,000 VND</p>
-      </div>
-      <div class="product">
-        <h3>Samsung Galaxy S23</h3>
-        <p>Giá: 18,000,000 VND</p>
-      </div>
-      <div class="product">
-        <h3>Xiaomi 13</h3>
-        <p>Giá: 15,000,000 VND</p>
-      </div>
-    </div>
-  </main>
+<header>
+  <h1>📱 FourT Mobile</h1>
+  <nav>
+    <a href="#">Trang chủ</a>
+    <a href="admin.html">Admin</a>
+  </nav>
+  <div class="cart">
+    🛒 <span id="cart-count">0</span>
+  </div>
+</header>
 
-  <footer>
-    <p>© 2026 FourT Mobile</p>
-  </footer>
+<main>
+  <h2>Sản phẩm</h2>
+  <div class="products" id="product-list"></div>
+
+  <h2>🛒 Giỏ hàng</h2>
+  <div id="cart-items"></div>
+  <button onclick="checkout()">Thanh toán</button>
+</main>
+
+<script src="script.js"></script>
 </body>
 </html>
